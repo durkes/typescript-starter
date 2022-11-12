@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "rootDir": "./",
+        "outDir": "./",
+        "strict": true,
+        "watch": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
