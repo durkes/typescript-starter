@@ -22,7 +22,7 @@
 })();
 // custom type
 (function () {
-    let font = 'bold';
+    const font = 'bold';
     console.log(font);
 })();
 // define object
@@ -74,11 +74,11 @@
 (function () {
     const contactForm = {
         errors: {
-            email: "This must be a valid email address"
+            email: 'This must be a valid email address'
         },
         values: {
-            name: "Bob",
-            email: "bob@someemail.com",
+            name: 'Bob',
+            email: 'bob@someemail.com',
         },
     };
     console.log(contactForm);
@@ -93,13 +93,13 @@
     }
     const contactForm = {
         values: {
-            name: "Bob",
-            email: "bob@someemail.com",
+            name: 'Bob',
+            email: 'bob@someemail.com',
             phone: 8005551212
         },
     };
-    console.log(getFieldValue(contactForm, "name"));
-    console.log(getFieldValue(contactForm, "phone"));
+    console.log(getFieldValue(contactForm, 'name'));
+    console.log(getFieldValue(contactForm, 'phone'));
 })();
 // class w/ instanceof type guard
 (function () {
@@ -127,14 +127,14 @@
     }
     function sayHello(contact) {
         if (contact instanceof Person) {
-            console.log("Hello " + contact.firstName);
+            console.log('Hello ' + contact.firstName);
         }
         else if (contact instanceof Organisation) {
-            console.log("Hello " + contact.name);
+            console.log('Hello ' + contact.name);
         }
     }
-    const bob = new Person("Bob", "Young", "bob.young@somewhere.com");
-    const redBricks = new Organisation("Red Bricks", "info.redbricks@somewhere.com");
+    const bob = new Person('Bob', 'Young', 'bob.young@somewhere.com');
+    const redBricks = new Organisation('Red Bricks', 'info.redbricks@somewhere.com');
     sayHello(bob);
     sayHello(redBricks);
 })();
@@ -148,18 +148,18 @@
     }
     function sayHello(contact) {
         if (isPerson(contact)) {
-            console.log("Hello " + contact.firstName);
+            console.log('Hello ' + contact.firstName);
         }
         else if (isOrganisation(contact)) {
-            console.log("Hello " + contact.name);
+            console.log('Hello ' + contact.name);
         }
     }
     const bob = {
-        firstName: "Bob",
-        surname: "Young"
+        firstName: 'Bob',
+        surname: 'Young'
     };
     const redBricks = {
-        name: "Red Bricks"
+        name: 'Red Bricks'
     };
     sayHello(bob);
     sayHello(redBricks);
@@ -168,11 +168,11 @@
 (function () {
     const contactForm = {
         values: {
-            name: "Bob",
-            email: "bob@someemail.com"
+            name: 'Bob',
+            email: 'bob@someemail.com'
         },
         errors: {
-            email: "Invalid email address"
+            email: 'Invalid email address'
         }
     };
     console.log(contactForm);
@@ -182,7 +182,59 @@
 })();
 // utility types
 (function () {
-    // check whether  type contains null: null extends T[P]
+    // check whether type contains null: null extends T[P]
     // if true, return prop name, which is P
-    // If false, return never to remove this from the constructed type
+    // if false, return never to remove this from the constructed type
+})();
+// const assertion
+(function () {
+    const bill = {
+        name: 'Bill',
+        profile: {
+            level: 1,
+        },
+        scores: [90, 65, 80],
+    };
+})();
+// deepFreeze utility function
+// makes objects immutable at compile and runtime
+(function () {
+    function deepFreeze(obj) {
+        const propNames = Object.getOwnPropertyNames(obj);
+        for (const name of propNames) {
+            const value = obj[name];
+            if (value && typeof value === 'object') {
+                deepFreeze(value);
+            }
+        }
+        return Object.freeze(obj);
+    }
+    const bill = deepFreeze({
+        name: 'Bill',
+        profile: {
+            level: 1,
+        },
+        scores: [90, 65, 80],
+    });
+})();
+// deepImmutable utility type
+// combined w/ deepFreeze utility function above
+(function () {
+    function deepFreeze(obj) {
+        const propNames = Object.getOwnPropertyNames(obj);
+        for (const name of propNames) {
+            const value = obj[name];
+            if (value && typeof value === 'object') {
+                deepFreeze(value);
+            }
+        }
+        return Object.freeze(obj);
+    }
+    const bill = deepFreeze({
+        name: 'Bill',
+        profile: {
+            level: 1,
+        },
+        scores: [90, 65, 80],
+    });
 })();
